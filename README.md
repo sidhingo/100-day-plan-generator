@@ -4,7 +4,7 @@ A live AI pipeline, not a template. Type any company name and it researches that
 the open web in real time, then runs a structured reasoning pass to build a 100-day plan in
 front of you.
 
-**Live demo:** [100-day-plan-generator.vercel.app](https://100-day-plan-generator.vercel.app)
+**Live demo:** [[100-day-plan-generator.vercel.app](https://hundred-day-plan.vercel.app/)]
 
 ## Why this exists
 
