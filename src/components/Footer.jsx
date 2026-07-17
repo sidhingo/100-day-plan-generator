@@ -36,8 +36,8 @@ export default function Footer() {
           it researches.
         </p>
       </div>
-      <div className="mt-6 text-xs text-neutral-400 flex items-center gap-2 overflow-hidden">
-        <span className="flex-shrink-0">Also built:</span>
+      <div className="mt-10 border-t border-neutral-200 pt-6 text-sm text-neutral-500 flex items-center gap-2 overflow-hidden">
+        <span className="flex-shrink-0 font-medium text-neutral-700">Also built:</span>
         
           <a href="https://strategy-translator.vercel.app"
           target="_blank"
