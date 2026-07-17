@@ -3,6 +3,7 @@ import CompanyInput from './components/CompanyInput.jsx';
 import PipelineStages from './components/PipelineStages.jsx';
 import PlanOutput from './components/PlanOutput.jsx';
 import Footer from './components/Footer.jsx';
+import { Analytics } from '@vercel/analytics/react';
 
 const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
@@ -116,6 +117,7 @@ export default function App() {
       </main>
 
       <Footer />
-    </div>
+      <Analytics />
+      </div>
   );
 }
