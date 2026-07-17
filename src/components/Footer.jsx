@@ -36,7 +36,19 @@ export default function Footer() {
           it researches.
         </p>
       </div>
-
+      <div className="mt-6 text-xs text-neutral-400 flex items-center gap-2 overflow-hidden">
+        <span className="flex-shrink-0">Also built:</span>
+        
+          <a href="https://strategy-translator.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-neutral-700 flex-shrink-0"
+        >
+          Strategy Translator
+        </a>
+        <span className="text-neutral-300 flex-shrink-0">→</span>
+        <span className="truncate">turns messy notes into the actual decision and tradeoffs</span>
+      </div>
       <div className="mt-8 border-t border-neutral-200 pt-8">
         <p className="text-[11px] text-neutral-500 mb-4">
           Have feedback, a question, or want to collaborate? Drop a note below.
