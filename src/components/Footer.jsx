@@ -37,7 +37,7 @@ export default function Footer() {
           it researches.
         </p>
       </div>
-      <div className="mt-10 border-t border-neutral-200 pt-6 text-sm text-neutral-500 flex items-center gap-2 overflow-hidden">
+      <div className="mt-10 border-t border-neutral-200 pt-6 text-sm text-neutral-500 flex flex-wrap items-center gap-x-2 gap-y-1">
         <span className="flex-shrink-0 font-medium text-neutral-700">Also built:</span>
         
           <a href="https://strategy-translator.vercel.app"
@@ -48,7 +48,7 @@ export default function Footer() {
           Strategy Translator
         </a>
         <span className="text-neutral-300 flex-shrink-0">→</span>
-        <span className="truncate">turns messy notes into the actual decision and tradeoffs</span>
+        <span className="flex-1 min-w-[180px]">turns messy notes into the actual decision and tradeoffs</span>
       </div>
       <div className="mt-8 border-t border-neutral-200 pt-8">
         <p className="text-[11px] text-neutral-500 mb-4">
