@@ -4,7 +4,7 @@ export default function PlanOutput({ plan, company, onReset }) {
   const displayName = plan.companyName || company;
   return (
     <div className="py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
         <div>
           <p className="text-xs uppercase tracking-widest text-neutral-500 font-mono">
             100-Day Plan
