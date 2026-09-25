@@ -202,7 +202,7 @@ Keep quickWins and structuralIssues to exactly 4 items each. kpiTree must be exa
           redis.set(keys.cache(slug), plan, { ex: 60 * 60 * 24 * 7 }), // cache 7 days
         ]);
 
-        controller.enqueue(sse({ stage: 'complete', plan }));
+        controller.enqueue(sse({ stage: 'complete', plan, ...(isEvalRequest ? { research: researchBrief } : {}) }));
         controller.close();
       } catch (err) {
         controller.enqueue(sse({ stage: 'error', message: 'Something went wrong generating the plan. Try again.' }));
