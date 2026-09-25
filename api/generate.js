@@ -6,6 +6,7 @@ export const config = { runtime: 'edge' };
 
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
 const ANTHROPIC_VERSION = '2023-06-01';
+const EVAL_SECRET = process.env.EVAL_SECRET;
 
 // 5 requests per IP per rolling day, generous for a real visitor, a wall for a bot.
 const ratelimit = new Ratelimit({
@@ -81,18 +82,23 @@ export default async function handler(req) {
 
       try {
         const { company, turnstileToken } = await req.json();
+        const isEvalRequest = EVAL_SECRET && req.headers.get('x-eval-secret') === EVAL_SECRET;
 
         if (!company || typeof company !== 'string' || company.length > 120) {
           return fail("That company name doesn't look right, try again.");
         }
 
-        // 1. Turnstile check (invisible to real users)
-        const human = await verifyTurnstile(turnstileToken, ip);
-        if (!human) return fail('Verification failed, refresh the page and try again.');
+// 1. Turnstile check (invisible to real users)
+if (!isEvalRequest) {
+  const human = await verifyTurnstile(turnstileToken, ip);
+  if (!human) return fail('Verification failed, refresh the page and try again.');
+}
 
-        // 2. Per-IP rate limit
-        const { success } = await ratelimit.limit(ip);
-        if (!success) return fail("You've hit today's limit for this tool. Check back tomorrow.");
+// 2. Per-IP rate limit
+if (!isEvalRequest) {
+  const { success } = await ratelimit.limit(ip);
+  if (!success) return fail("You've hit today's limit for this tool. Check back tomorrow.");
+}
 
         // 3. Sitewide daily budget circuit-breaker
         const spentToday = Number((await redis.get(keys.dailyBudget(today))) || 0);
@@ -102,11 +108,11 @@ export default async function handler(req) {
 
         // 4. Serve from cache if this exact company was already run today
         const slug = company.trim().toLowerCase().replace(/\s+/g, '-');
-        const cached = await redis.get(keys.cache(slug));
+        const cached = !isEvalRequest && (await redis.get(keys.cache(slug)));
         if (cached) {
           controller.enqueue(sse({ stage: 'research', status: 'start' }));
           controller.enqueue(sse({ stage: 'structuring', status: 'start' }));
-          controller.enqueue(sse({ stage: 'complete', plan: cached }));
+          controller.enqueue(sse({ stage: 'complete', plan, ...(isEvalRequest ? { research: researchBrief } : {}) }));
           controller.close();
           return;
         }
