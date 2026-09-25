@@ -101,9 +101,11 @@ if (!isEvalRequest) {
 }
 
         // 3. Sitewide daily budget circuit-breaker
-        const spentToday = Number((await redis.get(keys.dailyBudget(today))) || 0);
-        if (spentToday >= DAILY_BUDGET_CAP_CENTS) {
-          return fail("High demand right now, check back later today.");
+        if (!isEvalRequest) {
+          const spentToday = Number((await redis.get(keys.dailyBudget(today))) || 0);
+          if (spentToday >= DAILY_BUDGET_CAP_CENTS) {
+            return fail("High demand right now, check back later today.");
+          }
         }
 
         // 4. Serve from cache if this exact company was already run today
